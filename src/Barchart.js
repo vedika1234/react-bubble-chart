@@ -36,7 +36,8 @@ const BarChart = ({ data }) => {
   let minSalary = getMin("salary");
 
   let rangeY = _.range(minSalary, mostSalary, 20);
-  let rangeX = _.range(0, mostCompRatio, 20);
+  let rangeX = _.range(minCompRatio
+    , mostCompRatio, 20);
   rangeX.push(mostCompRatio);
   rangeY.push(mostSalary);
 
