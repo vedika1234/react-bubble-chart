@@ -36,7 +36,7 @@ const BarChart = ({ data }) => {
   let minSalary = getMin("salary");
 
   let rangeY = _.range(minSalary, mostSalary, 20);
-  let rangeX = _.range(minCompRatio, mostCompRatio, 20);
+  let rangeX = _.range(0, mostCompRatio, 20);
   rangeX.push(mostCompRatio);
   rangeY.push(mostSalary);
 
@@ -44,6 +44,9 @@ const BarChart = ({ data }) => {
 
   const chartHeight = mostSalary + maxRadius / 2;
   const chartWidth = (mostCompRatio - minCompRatio) * 10 + maxRadius + 100;
+
+  const translateX = minSalary - maxRadius;
+  const translateY = minCompRatio;
   return (
     <div
       style={{
@@ -61,7 +64,7 @@ const BarChart = ({ data }) => {
         }}
       >
         <svg
-          viewBox={`${minSalary - maxRadius} ${minCompRatio} ${chartWidth + 30
+          viewBox={`${translateX} ${translateY} ${chartWidth + 30
             } ${chartHeight + 30}`}
           width={chartWidth}
           height={chartHeight}
@@ -74,13 +77,14 @@ const BarChart = ({ data }) => {
             {'Compratio'}
           </text>
           {rangeX.map((val) => (
-            <text
+            <><text
               x={(val - minCompRatio) * 10}
               y={chartHeight + minCompRatio - 2 + 20}
               style={{ fontSize: "12px" }}
             >
               {val}
             </text>
+              <line x1={(val - minCompRatio) * 10} x2={(val - minCompRatio) * 10} y1={chartHeight + minCompRatio} y2={chartHeight + minCompRatio - 5} stroke="green" strokeWidth={2} /></>
           ))}
 
           <Axis
@@ -90,13 +94,16 @@ const BarChart = ({ data }) => {
             horizontal={true}
           />
           {rangeY.reverse().map((val) => (
-            <text
-              x={minSalary - maxRadius - 20}
-              y={chartHeight - val}
-              style={{ fontSize: "12px", color: "red" }}
-            >
-              {val}
-            </text>
+            <>
+              <text
+                x={minSalary - maxRadius - 20}
+                y={chartHeight - val}
+                style={{ fontSize: "12px", color: "red" }}
+              >
+                {val}
+              </text>
+              <line x1={minSalary - maxRadius + 2} x2={minSalary - maxRadius + 5} y1={chartHeight - val - 2} y2={chartHeight - val - 2} stroke="green" strokeWidth={2} />
+            </>
           ))}
           <Axis
             x={minSalary - maxRadius + 2}
