@@ -1,5 +1,4 @@
 import BarChart from './Barchart';
-import logo from './logo.svg';
 
 import './App.css';
 

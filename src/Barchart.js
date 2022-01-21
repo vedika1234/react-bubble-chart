@@ -2,6 +2,7 @@ import _, { range } from "lodash";
 import React from "react";
 
 import Axis from "./Axis";
+import Bubble from "./Bubble";
 
 const BarChart = ({ data }) => {
   const massagedData = data.map((datum) =>
@@ -38,21 +39,8 @@ const BarChart = ({ data }) => {
   let rangeX = _.range(minCompRatio, mostCompRatio, 20);
   rangeX.push(mostCompRatio);
   rangeY.push(mostSalary);
-  console.log(minSalary, mostSalary, rangeY, rangeX);
 
-  const randomHex = () =>
-    `#${Math.floor(Math.random() * 0xffffff)
-      .toString(16)
-      .padEnd(6, "0")}`;
 
-  const Bubble = ({ x, y, radius, title, xLabel, yLabel }) => (
-    <g>
-      <circle cx={x} cy={y} r={radius} fill={randomHex()} opacity={0.3} />
-      <text x={x} y={y} style={{ fontSize: "14px" }}>
-        {title}
-      </text>
-    </g>
-  );
 
   const chartHeight = mostSalary + maxRadius / 2;
   const chartWidth = (mostCompRatio - minCompRatio) * 10 + maxRadius + 100;
@@ -78,6 +66,13 @@ const BarChart = ({ data }) => {
           width={chartWidth}
           height={chartHeight}
         >
+          <text
+            x={(mostCompRatio + minCompRatio) / 2}
+            y={chartHeight + minCompRatio - 2 + 30}
+            style={{ fontSize: "12px" }}
+          >
+            {'Compratio'}
+          </text>
           {rangeX.map((val) => (
             <text
               x={(val - minCompRatio) * 10}
